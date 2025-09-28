@@ -1,8 +1,10 @@
+import GameCard from '@/components/specific/GameCard';
+import type { GameProps } from '@/types';
+
 interface RankingLayoutProps {
 	title: string;
 	isLoading: boolean;
-	data: any[];
-	renderItem: (item: any, index: number) => React.ReactNode;
+	games: GameProps[];
 }
 
 const SkeletonList = () => (
@@ -14,17 +16,21 @@ const SkeletonList = () => (
 	</div>
 );
 
-const RankingLayout = ({ title, isLoading, data, renderItem }: RankingLayoutProps) => {
+const RankingLayout = ({ title, isLoading, games }: RankingLayoutProps) => {
 	return (
 		<div className='container mx-auto px-4 py-6'>
-			<h1 className='text-3xl font-bold mb-6 text-brand-orange-light'>{title}</h1>
+			<h1 className='text-foreground text-3xl leading-tight font-bold tracking-tight text-pretty mb-5'>
+				{title}
+			</h1>
 
 			{isLoading ? (
 				<SkeletonList />
 			) : (
-				<ul className='space-y-4'>
-					{data.map((item, index) => (
-						<li key={index}>{renderItem(item, index)}</li>
+				<ul className='space-y-2'>
+					{games.map((game, index) => (
+						<li key={game.slug}>
+							<GameCard game={game} index={index}></GameCard>
+						</li>
 					))}
 				</ul>
 			)}

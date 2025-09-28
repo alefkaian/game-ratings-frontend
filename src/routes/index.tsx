@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import DefaultPageLayout from '../layouts/DefaultPageLayout';
 import AllTimesTop100 from '../pages/rankings/AllTimesTop100';
 import GameDetails from '../pages/games/GameDetails';
-import RankingLayout from '@/layouts/RankingLayout';
 
 export default function AppRoutes() {
 	return (

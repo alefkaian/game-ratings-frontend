@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Skeleton } from '../ui/skeleton';
 
 import {
 	NavigationMenu,
@@ -9,48 +11,74 @@ import {
 	NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 
-const components: { title: string; href: string; description: string }[] = [
-	{
-		title: 'Alert Dialog',
-		href: '/docs/primitives/alert-dialog',
-		description:
-			'A modal dialog that interrupts the user with important content and expects a response.',
-	},
-	{
-		title: 'Hover Card',
-		href: '/docs/primitives/hover-card',
-		description: 'For sighted users to preview content available behind a link.',
-	},
-	{
-		title: 'Progress',
-		href: '/docs/primitives/progress',
-		description:
-			'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
-	},
-	{
-		title: 'Scroll-area',
-		href: '/docs/primitives/scroll-area',
-		description: 'Visually or semantically separates content.',
-	},
-	{
-		title: 'Tabs',
-		href: '/docs/primitives/tabs',
-		description:
-			'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
-	},
-	{
-		title: 'Tooltip',
-		href: '/docs/primitives/tooltip',
-		description:
-			'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
-	},
-];
+const GenresSkeleton = () => {
+	return (
+		<>
+			<li className='p-2 h-[30px]'>
+				<Skeleton className='h-full w-4/12 rounded-full' />
+			</li>
+			<li className='p-2 h-[30px]'>
+				<Skeleton className='h-full w-6/12 rounded-full' />
+			</li>
+			<li className='p-2 h-[30px]'>
+				<Skeleton className='h-full w-7/12 rounded-full' />
+			</li>
+			<li className='p-2 h-[30px]'>
+				<Skeleton className='h-full w-5/12 rounded-full' />
+			</li>
+		</>
+	);
+};
+
+function ListItem({
+	title,
+	href,
+	...props
+}: React.ComponentPropsWithoutRef<'li'> & { href: string }) {
+	return (
+		<li {...props}>
+			<NavigationMenuLink asChild>
+				<Link to={href}>
+					<div className='text-sm leading-none font-medium'>{title}</div>
+				</Link>
+			</NavigationMenuLink>
+		</li>
+	);
+}
+
+interface GenresProps {
+	slug: string;
+	name: string;
+}
 
 const Navbar = () => {
+	const [genres, setGenres] = useState<GenresProps[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	const fetchGenres = () => {
+		const genres = [
+			{ slug: 'action', name: 'Action' },
+			{ slug: 'adventure', name: 'Adventure' },
+			{ slug: 'arcade', name: 'Arcade' },
+			{ slug: 'board', name: 'Board' },
+			{ slug: 'card', name: 'Card' },
+			{ slug: 'fighting', name: 'Fighting' },
+			{ slug: 'puzzle', name: 'Puzzle' },
+		];
+		setIsLoading(false);
+		setGenres(genres);
+	};
+
+	useEffect(() => {
+		const timer = setTimeout(fetchGenres, 5000);
+
+		return () => clearTimeout(timer);
+	}, []);
+
 	return (
-		<header className='flex items-center bg-brand-brown text-brand-orange-light sticky top-0 z-50 py-2'>
+		<header className='flex items-center top-0 z-50 py-2 border-b'>
 			<div className='flex-none px-4'>
-				<h1>
+				<h1 className='text-destructive'>
 					<span>game</span>
 					<span className='font-bold'>Ratings</span>
 				</h1>
@@ -58,22 +86,27 @@ const Navbar = () => {
 
 			<NavigationMenu viewport={true} className='max-w-full'>
 				<NavigationMenuList className='flex flex-1 w-full'>
-					<NavigationMenuItem className='flex=1 text-center mx-5'>
+					<NavigationMenuItem className='flex-1 text-center'>
 						<NavigationMenuLink asChild>
-							<Link to='/'>Top 100</Link>
+							<Link to='/rankings/top100'>Top 100</Link>
 						</NavigationMenuLink>
 					</NavigationMenuItem>
-					<NavigationMenuItem className='flex=1 text-center'>
+					<NavigationMenuItem className='flex-1 text-center'>
 						<NavigationMenuTrigger>Genres</NavigationMenuTrigger>
 						<NavigationMenuContent>
-							<ul className='bg-brand-brown text-brand-orange-light grid w-[calc(50vw)] grid-cols-1 gap-4 mx-auto md:w-[500px] md:grid-cols-2 lg:w-[600px]'>
-								{components.map((component) => (
-									<ListItem
-										key={component.title}
-										title={component.title}
-										href={component.href}
-									></ListItem>
-								))}
+							<ul className='grid grid-cols-1 w-[50vw] gap-4 mx-auto md:w-[500px] md:grid-cols-2 lg:w-[600px]'>
+								{isLoading ? (
+									<GenresSkeleton />
+								) : (
+									genres.map((genre) => (
+										<ListItem
+											key={genre.slug}
+											title={genre.name}
+											//href={'/rankings/genres/${genre.slug}'}
+											href='#'
+										></ListItem>
+									))
+								)}
 							</ul>
 						</NavigationMenuContent>
 					</NavigationMenuItem>
@@ -84,23 +117,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-function ListItem({
-	title,
-	children,
-	href,
-	...props
-}: React.ComponentPropsWithoutRef<'li'> & { href: string }) {
-	return (
-		<li {...props}>
-			<NavigationMenuLink asChild>
-				<Link to={href}>
-					<div className='text-sm leading-none font-medium'>{title}</div>
-					<p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
-						{children}
-					</p>
-				</Link>
-			</NavigationMenuLink>
-		</li>
-	);
-}
