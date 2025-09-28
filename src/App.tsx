@@ -1,6 +1,8 @@
+import AppRoutes from "./routes"
+
 function App() {
   return (
-    <p>Hello world!</p>
+    <AppRoutes />
   )
 }
 
