@@ -1,10 +1,10 @@
 import GameCard from '@/components/specific/GameCard';
-import type { GameProps } from '@/types';
+import type { Game } from '@/types';
 
 interface RankingLayoutProps {
 	title: string;
 	isLoading: boolean;
-	games: GameProps[];
+	games: Game[];
 }
 
 const SkeletonList = () => (
