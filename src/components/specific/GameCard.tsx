@@ -1,10 +1,10 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
-import type { GameProps } from '@/types';
+import type { Game } from '@/types';
 import { getMetacriticColor } from '@/styles/scoreCalculator';
 
 interface GameCardProps {
-	game: GameProps;
+	game: Game;
 	index: number;
 }
 
@@ -14,8 +14,8 @@ const GameCard = ({ game, index }: GameCardProps) => {
 			<div className='w-1/4 h-30 overflow-hidden rounded items-center'>
 				<img
 					className='h-full w-full object-cover object-center'
-					src='https://media.rawg.io/media/games/cc1/cc196a5ad763955d6532cdba236f730c.jpg'
-					alt='logo'
+					src={game.backgroundImage}
+					alt={`${game.slug}-background`}
 				></img>
 			</div>
 			<div className='flex flex-col flex-1'>
@@ -32,10 +32,16 @@ const GameCard = ({ game, index }: GameCardProps) => {
 					</div>
 					<div className='my-1 text-xs space-y-1 text-foreground/70'>
 						<p>
-							Rating <Badge className='text-center' variant={'outline'}>{game.rating}</Badge>
+							Rating{' '}
+							<Badge className='text-center' variant={'outline'}>
+								{game.rating}
+							</Badge>
 						</p>
 						<p>
-							Metacritic <Badge className={`text-center ${getMetacriticColor(game.metacritic)}`}>{game.metacritic}</Badge>
+							Metacritic{' '}
+							<Badge className={`text-center ${getMetacriticColor(game.metacritic)}`}>
+								{game.metacritic}
+							</Badge>
 						</p>
 					</div>
 					<CardFooter className='flex justify-start gap-4 p-0 mt-2'>

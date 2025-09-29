@@ -1,4 +1,4 @@
-export interface GameProps {
+export interface Game {
 	slug: string;
 	name: string;
 	rating: number;
@@ -8,5 +8,14 @@ export interface GameProps {
 		name: string;
 	}[];
 	year: number;
-	image: string;
+	backgroundImage: string;
+}
+
+export interface PaginatedResponse<T> {
+	currentPage: number;
+	pageSize: number;
+	totalElements: number;
+    totalPages: number;
+    isLast: boolean;
+	content: T[];
 }
