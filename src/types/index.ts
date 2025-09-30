@@ -7,7 +7,7 @@ export interface Game {
 		slug: string;
 		name: string;
 	}[];
-	year: number;
+	releaseYear: number;
 	backgroundImage: string;
 }
 

@@ -11,7 +11,7 @@ interface GameCardProps {
 const GameCard = ({ game, index }: GameCardProps) => {
 	return (
 		<Card className='flex flex-row items-center min-h-min p-2'>
-			<div className='w-1/4 h-30 overflow-hidden rounded items-center'>
+			<div className='w-1/4 h-32 overflow-hidden rounded items-center'>
 				<img
 					className='h-full w-full object-cover object-center'
 					src={game.backgroundImage}
@@ -19,15 +19,13 @@ const GameCard = ({ game, index }: GameCardProps) => {
 				></img>
 			</div>
 			<div className='flex flex-col flex-1'>
-				<CardContent className='px-0 py-2'>
+				<CardContent className='p-0'>
 					<div>
-						<CardTitle className='flex font-extrabold text-sm'>
-							<p>
-								{index + 1}. {game.name}
-							</p>
+						<CardTitle className='font-extrabold text-sm'>
+							{index + 1}. {game.name}
 						</CardTitle>
 						<CardDescription className='font-extralight text-foreground/70 text-xs'>
-							{game.year}
+							{game.releaseYear}
 						</CardDescription>
 					</div>
 					<div className='my-1 text-xs space-y-1 text-foreground/70'>
