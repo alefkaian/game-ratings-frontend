@@ -2,7 +2,7 @@ import RankingLayout from '@/layouts/RankingLayout';
 import { useEffect, useState } from 'react';
 import useFetchTopGames from '@/hooks/useFetchTopGames';
 
-const AllTimesTop100 = () => {
+const Top100 = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { games } = useFetchTopGames();
 
@@ -15,4 +15,4 @@ const AllTimesTop100 = () => {
 	return <RankingLayout title='Best 100 Games of All Time' isLoading={isLoading} games={games} />;
 };
 
-export default AllTimesTop100;
+export default Top100;
